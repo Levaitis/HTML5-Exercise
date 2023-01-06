@@ -32,10 +32,12 @@ try {
   accelerometer.addEventListener("reading", () => reloadOnShake(accelerometer));
   accelerometer.start();
   
-  var ax = accelerometer.x
-  var ay = accelerometer.y
-  var az = accelerometer.z
-
-  document.querySelector("#x_acc").innerHTML = "X = " + ax;
-  document.querySelector("#y_acc").innerHTML = "Y = " + ay;
-  document.querySelector("#z_acc").innerHTML = "Z = " + az;
+  window.ondevicemotion = function(event) { 
+    var ax = accelerometer.x
+    var ay = accelerometer.y
+    var az = accelerometer.z
+  
+    document.querySelector("#x_acc").innerHTML = "X = " + ax;
+    document.querySelector("#y_acc").innerHTML = "Y = " + ay;
+    document.querySelector("#z_acc").innerHTML = "Z = " + az;
+}
