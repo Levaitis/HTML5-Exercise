@@ -19,7 +19,6 @@ function init_acc(element) {
         //Start recording of Data
         element.innerHTML='Stop <i class="fas fa-stop"></i>'
         element.classList.replace("btn-success","btn-danger");
-        console.log(element.childNodes);
     
     try {
         accelerometer = new Accelerometer({ referenceFrame: 'device' });
@@ -54,8 +53,16 @@ function init_acc(element) {
         var az = accelerometer.z
     
         document.querySelector("#x_acc").innerHTML = ax;
+        document.querySelector("#x_acc_progress").style = "width: "+ ax*100 +"%";
+        document.querySelector("#x_acc_progress").ariaValueNow = ax*100;
+
         document.querySelector("#y_acc").innerHTML = ay;
+        document.querySelector("#y_acc_progress").style = "width: "+ ay*100 +"%";
+        document.querySelector("#y_acc_progress").ariaValueNow = ay*100;
+
         document.querySelector("#z_acc").innerHTML = az;
+        document.querySelector("#z_acc_progress").style = "width: "+ az*100 +"%";
+        document.querySelector("#z_acc_progress").ariaValueNow = az*100;
     });
     accelerometer.start();
     }
