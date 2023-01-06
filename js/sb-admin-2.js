@@ -7,6 +7,9 @@
     $(".sidebar").toggleClass("toggled");
     if ($(".sidebar").hasClass("toggled")) {
       $('.sidebar .collapse').collapse('hide');
+      document.getElementById("sidebar_message").style.visibility = "hidden";
+    } else {
+      document.getElementById("sidebar_message").style.visibility = "visible";
     };
   });
 
