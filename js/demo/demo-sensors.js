@@ -7,9 +7,3 @@ window.ondevicemotion = function(event) {
 	document.querySelector("#y_acc").innerHTML = "Y = " + ay;
 	document.querySelector("#z_acc").innerHTML = "Z = " + az;
 }
-
-window.addEventListener("deviceorientation", function(event) {
-	document.querySelector("#mag_alpha").innerHTML = "alpha = " + event.alpha;
-	document.querySelector("#mag_beta").innerHTML = "beta = " + event.beta;
-	document.querySelector("#mag_gamma").innerHTML = "gamma = " + event.gamma;
-}, true);
