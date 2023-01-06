@@ -24,7 +24,7 @@ try {
         console.log('Sensor construction was blocked by a permissions policy.');
     } else if (error.name === 'ReferenceError') {
         console.log('Sensor is not supported by the User Agent.');
-        error_message.innerHTML = "Sensor wird vom Browser nicht unterstüzt.";
+        error_message.innerHTML = "Sensor API wird vom Browser nicht unterstüzt.";
     } else {
         throw error;
     }
