@@ -29,10 +29,7 @@ try {
         throw error;
     }
   };
-  accelerometer.addEventListener("reading", () => reloadOnShake(accelerometer));
-  accelerometer.start();
-  
-  window.ondevicemotion = function(event) { 
+  accelerometer.addEventListener("reading", () => {
     var ax = accelerometer.x
     var ay = accelerometer.y
     var az = accelerometer.z
@@ -40,4 +37,5 @@ try {
     document.querySelector("#x_acc").innerHTML = "X = " + ax;
     document.querySelector("#y_acc").innerHTML = "Y = " + ay;
     document.querySelector("#z_acc").innerHTML = "Z = " + az;
-}
+  });
+  accelerometer.start();
