@@ -52,15 +52,15 @@ function init_acc(element) {
         var ay = accelerometer.y
         var az = accelerometer.z
     
-        document.querySelector("#x_acc").innerHTML = ax;
+        document.querySelector("#x_acc").innerHTML = +ax.toFixed(2);
         document.querySelector("#x_acc_progress").style = "width: "+ ax*10 +"%";
         document.querySelector("#x_acc_progress").ariaValueNow = ax*10;
 
-        document.querySelector("#y_acc").innerHTML = ay;
+        document.querySelector("#y_acc").innerHTML = +ay.toFixed(2);;
         document.querySelector("#y_acc_progress").style = "width: "+ ay*10 +"%";
         document.querySelector("#y_acc_progress").ariaValueNow = ay*10;
 
-        document.querySelector("#z_acc").innerHTML = az;
+        document.querySelector("#z_acc").innerHTML = +az.toFixed(2);;
         document.querySelector("#z_acc_progress").style = "width: "+ az*10 +"%";
         document.querySelector("#z_acc_progress").ariaValueNow = az*10;
     });
