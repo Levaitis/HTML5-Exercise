@@ -3,6 +3,16 @@ var error_card = document.getElementById("error_acc");
 var error_message = document.getElementById("error_acc_msg");
 error_card.style.display = "none";
 
+//Values for graph
+Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#858796';
+const acg = document.getElementById('acc_graph');
+var acc_graph = null;
+
+var arr_x_data = [];
+var arr_y_data = [];
+var arr_z_data = [];
+
 function init_acc(element) {
     if(element.classList.contains("pressed")) {
         //STOP recording of Data
@@ -14,10 +24,14 @@ function init_acc(element) {
         element.innerHTML='Start <i class="fas fa-play"></i>';
         element.classList.replace("btn-danger","btn-success");
         error_card.style.display = "none";
+
+        draw_graph();
     } else {
         //Start recording of Data
         element.innerHTML='Stop <i class="fas fa-stop"></i>'
         element.classList.replace("btn-success","btn-danger");
+
+        init_graph();
     
     try {
         accelerometer = new Accelerometer({ referenceFrame: 'device' });
@@ -53,6 +67,7 @@ function init_acc(element) {
 
         var scaling = 5;
        
+        //Handle bars for mementary indication
         document.querySelector("#x_acc").innerHTML = +ax.toFixed(2);
         var x_prog = document.querySelector("#x_acc_progress");
         x_prog.style = "width: "+ Math.abs(ax*scaling) +"%";
@@ -84,10 +99,97 @@ function init_acc(element) {
             z_prog.classList.replace("bg-success","bg-danger");
         }
 
+        //Handle data collection for graph
+        arr_x_data.push(ax.toFixed(2));
+        arr_y_data.push(ay.toFixed(2));
+        arr_z_data.push(az.toFixed(2));
+
     });
     accelerometer.start();
     }
-    
+
     //Toggle Button
     element.classList.toggle("pressed");
+}
+
+function init_graph() {
+    console.log("init graph");
+    
+    //Clear Arrays
+    arr_x_data = [];
+    arr_y_data = [];
+    arr_z_data = [];
+
+}
+
+function draw_graph() {
+    //Calculate labels
+    if(arr_x_data.length == arr_y_data.length && arr_x_data.length == arr_z_data.length) {
+        console.log("GOOD TO GO");
+        arr_labels = Array.from(Array(arr_x_data.length).keys());
+    } else {
+        console.log("ERROR");
+        arr_labels = [];
+    }
+    
+
+
+    acc_graph = new Chart(acg, {
+        type: 'line',
+        data: {
+            labels: arr_labels,
+            datasets: [
+                {
+                    label: 'X-Wert',
+                    data: arr_x_data,
+                },
+                {
+                    label: 'Y-Wert',
+                    data: arr_y_data,
+                },
+                {
+                    label: 'Z-Wert',
+                    data: arr_z_data,
+                }
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 25,
+                    top: 25,
+                    bottom: 0
+                }
+            },
+            scales: {
+
+            },
+            legend: {
+
+            },
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                titleMarginBottom: 10,
+                titleFontColor: '#6e707e',
+                titleFontSize: 14,
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                intersect: false,
+                mode: 'index',
+                caretPadding: 10,
+                callbacks: {
+                    label: function(tooltipItem, chart) {
+                      var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                      return datasetLabel + ': ' + tooltipItem.yLabel + ' m/s²';
+                    }
+                }
+            }
+        }
+    });
+
 }
