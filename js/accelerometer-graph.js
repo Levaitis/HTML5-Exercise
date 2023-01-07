@@ -4,7 +4,6 @@ var error_message = document.getElementById("error_acc_msg");
 error_card.style.display = "none";
 
 function init_acc(element) {
-    //Toggle Button
     if(element.classList.contains("pressed")) {
         //STOP recording of Data
         if(accelerometer) {
@@ -32,7 +31,7 @@ function init_acc(element) {
                 error_message.innerHTML = "Keine Verbindung zum Sensor möglich.";
             }
         });
-        accelerometer.addEventListener('reading', () => reloadOnShake(accelerometer));
+        // accelerometer.addEventListener('reading', () => reloadOnShake(accelerometer));
         accelerometer.start();
     } catch (error) {
         error_card.style.display = "block";
@@ -51,20 +50,44 @@ function init_acc(element) {
         var ax = accelerometer.x
         var ay = accelerometer.y
         var az = accelerometer.z
-    
+
+        var scaling = 5;
+       
         document.querySelector("#x_acc").innerHTML = +ax.toFixed(2);
-        document.querySelector("#x_acc_progress").style = "width: "+ ax*10 +"%";
-        document.querySelector("#x_acc_progress").ariaValueNow = ax*10;
+        var x_prog = document.querySelector("#x_acc_progress");
+        x_prog.style = "width: "+ Math.abs(ax*scaling) +"%";
+        x_prog.ariaValueNow = ax*scaling;
+        if( ax >= 0) {
+            x_prog.classList.replace("bg-danger","bg-success");
+        } else {
+            x_prog.classList.replace("bg-success","bg-danger");
+        }
 
         document.querySelector("#y_acc").innerHTML = +ay.toFixed(2);;
-        document.querySelector("#y_acc_progress").style = "width: "+ ay*10 +"%";
-        document.querySelector("#y_acc_progress").ariaValueNow = ay*10;
+        var y_prog = document.querySelector("#y_acc_progress");
+        y_prog.style = "width: "+ Math.abs(ay*scaling) +"%";
+        y_prog.ariaValueNow = ay*scaling;
+        if( ay >= 0) {
+            y_prog.classList.replace("bg-danger","bg-success");
+        } else {
+            y_prog.classList.replace("bg-success","bg-danger");
+        }
+        
 
         document.querySelector("#z_acc").innerHTML = +az.toFixed(2);;
-        document.querySelector("#z_acc_progress").style = "width: "+ az*10 +"%";
-        document.querySelector("#z_acc_progress").ariaValueNow = az*10;
+        var z_prog = document.querySelector("#z_acc_progress");
+        z_prog.style = "width: "+ Math.abs(az*scaling) +"%";
+        z_prog.ariaValueNow = az*scaling;
+        if( az >= 0) {
+            z_prog.classList.replace("bg-danger","bg-success");
+        } else {
+            z_prog.classList.replace("bg-success","bg-danger");
+        }
+
     });
     accelerometer.start();
     }
+    
+    //Toggle Button
     element.classList.toggle("pressed");
 }
