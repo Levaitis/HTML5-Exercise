@@ -24,18 +24,18 @@ try {
         console.log('Sensor construction was blocked by a permissions policy.');
     } else if (error.name === 'ReferenceError') {
         console.log('Sensor is not supported by the User Agent.');
-        error_message.innerHTML = "Sensor wird vom Browser nicht unterstüzt.";
+        error_message.innerHTML = "Sensor API wird vom Browser nicht unterstüzt.";
     } else {
         throw error;
     }
   };
-  accelerometer.addEventListener("reading", () => reloadOnShake(accelerometer));
-  accelerometer.start();
+  accelerometer.addEventListener("reading", () => {
+    var ax = accelerometer.x
+    var ay = accelerometer.y
+    var az = accelerometer.z
   
-  var ax = accelerometer.x
-  var ay = accelerometer.y
-  var az = accelerometer.z
-
-  document.querySelector("#x_acc").innerHTML = "X = " + ax;
-  document.querySelector("#y_acc").innerHTML = "Y = " + ay;
-  document.querySelector("#z_acc").innerHTML = "Z = " + az;
+    document.querySelector("#x_acc").innerHTML = "X = " + ax;
+    document.querySelector("#y_acc").innerHTML = "Y = " + ay;
+    document.querySelector("#z_acc").innerHTML = "Z = " + az;
+  });
+  accelerometer.start();
